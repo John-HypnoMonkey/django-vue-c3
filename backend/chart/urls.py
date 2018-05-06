@@ -5,5 +5,5 @@ app_name = "chart"
 
 urlpatterns = [
     path("", views.viewChart, name="index"),
-    path("api/chart/", views.apiChart, name='chartApi'),
+    path("api/chart/", views.viewChartAPI.as_view(), name='chartApi'),
 ]
