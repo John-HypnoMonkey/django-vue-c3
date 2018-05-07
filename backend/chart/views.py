@@ -1,17 +1,14 @@
 from django.shortcuts import render
-from random import randint
-
-from .models import PostSnapshot
 from rest_framework import views
 from rest_framework.response import Response
-
 from .serializers import PostSnapshotSerializer
+from . import parser_script
 
 
 class viewChartAPI(views.APIView):
-    def get(self, request):
-        dummy_data = PostSnapshot(0, randint(0,5), randint(0,5), randint(0,5))
-        results = PostSnapshotSerializer(dummy_data).data
+    def get(self, request, post_id=0):
+        data = parser_script.parseVK(post_id)
+        results = PostSnapshotSerializer(data).data
         return Response(results)
 
 

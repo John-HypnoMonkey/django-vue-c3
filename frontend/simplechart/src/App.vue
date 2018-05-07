@@ -11,12 +11,12 @@ import axios from 'axios'
 import VueTimers from 'vue-timers'
 
 Vue.use(VueTimers)
-
+let postid = '0'
 export default {
   name: 'App',
   methods: {
     getAPI () {
-      axios.get('http://127.0.0.1:8000/api/chart/')
+      axios.get('http://127.0.0.1:8000/api/chart/' + postid)
         .then(response => {
           this.handler.$emit('dispatch',
             (chart) => chart.flow({
@@ -26,6 +26,7 @@ export default {
                 ['comments', response.data['comments']]
               ]
             }))
+          postid = response.data['post_id']
         })
     }
   },
