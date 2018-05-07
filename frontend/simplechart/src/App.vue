@@ -7,23 +7,48 @@
 <script>
 import Vue from 'vue'
 import VueC3 from 'vue-c3'
+import axios from 'axios'
+import VueTimers from 'vue-timers'
+
+Vue.use(VueTimers)
 
 export default {
   name: 'App',
+  methods: {
+    getAPI () {
+      axios.get('http://127.0.0.1:8000/api/chart/')
+        .then(response => {
+          this.handler.$emit('dispatch',
+            (chart) => chart.flow({
+              columns: [
+                ['likes', response.data['likes']],
+                ['reposts', response.data['reposts']],
+                ['comments', response.data['comments']]
+              ]
+            }))
+        })
+    }
+  },
   components: {
     VueC3
   },
+  created () {
+    this.$options.interval = setInterval(this.getAPI, 3000)
+  },
   mounted () {
-    // to init the graph call:
     const options = {
       data: {
         columns: [
-          ['data1', 2, 4, 1, 5, 2, 1],
-          ['data2', 7, 2, 4, 6, 10, 1]
+          ['likes', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          ['reposts', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          ['comments', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
       }
     }
     this.handler.$emit('init', options)
+  },
+  beforeDestroy () {
+    clearInterval(this.$options.interval)
   },
   data () {
     return {

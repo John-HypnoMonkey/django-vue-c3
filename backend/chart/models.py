@@ -4,7 +4,7 @@ from django.db import models
 
 
 class PostSnapshot():
-    """ Plain model just for grabber. It can't be use in DB
+    """ Plain model just for grabber. It can't be used in DB
     """
     def __init__(this, time, likes, reposts, comments):
         this.time = time

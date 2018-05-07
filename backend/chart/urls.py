@@ -4,6 +4,6 @@ from . import views
 app_name = "chart"
 
 urlpatterns = [
-    path("", views.viewChart, name="index"),
+    path("", views.viewMainPage, name="index"),
     path("api/chart/", views.viewChartAPI.as_view(), name='chartApi'),
 ]
