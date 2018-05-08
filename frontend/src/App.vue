@@ -16,7 +16,7 @@ export default {
   name: 'App',
   methods: {
     getAPI () {
-      axios.get('http://127.0.0.1:8000/api/chart/' + postid)
+      axios.get(`http://127.0.0.1:8000/api/chart/${postid}`)
         .then(response => {
           this.handler.$emit('dispatch',
             (chart) => chart.flow({
